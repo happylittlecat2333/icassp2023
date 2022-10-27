@@ -1,0 +1,6 @@
+*.ipynb
+*.py
+*.pyc
+.DS_Store
+./__init__.py
+__pycache__/

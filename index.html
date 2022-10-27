@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
+
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>M2-CTTS: End-to-End Multi-scale Multi-modal Conversational Text-to-Speech Synthesis</title>
+<meta name="generator" content="Jekyll v3.9.0">
+<meta property="og:title" content="M2-CTTS: End-to-End Multi-scale Multi-modal Conversational Text-to-Speech Synthesis">
+<meta property="og:locale" content="en_US">
+<link rel="canonical" href="https://happylittlecat2333.github.io/icassp2023/">
+<meta property="og:url" content="https://syang1993.github.io/icassp2023/">
+<meta name="twitter:card" content="summary">
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body data-new-gr-c-s-check-loaded="14.1023.0" data-gr-ext-installed="">
+    <section class="page-header">
+    <!-- <h1 class="project-name"></h1>
+    <h2 class="project-tagline"></h2> -->
+      
+      
+    </section>
+
+    <section class="main-content">
+      <h1 id=""><center> M<sup>2</sup>-CTTS: End-to-End Multi-scale Multi-modal Conversational Text-to-Speech Synthesis </center></h1>
+      <!-- <h1 id=""><center> Evaluation </center></h1> -->
+      
+
+<center> Jinlong Xue<sup>1</sup>, Yayue Deng<sup>1</sup>, Fengping Wang<sup>1</sup>, Ya Li<sup>1</sup>, Yingming Gao<sup>1</sup>, Jianhua Tao<sup>2</sup>, Jianqing Sun<sup>3</sup>, Jiaen Liang<sup>3</sup> </center>
+<br>
+<center> <sup>1</sup> Beijing University of Posts and Telecommunications, Beijing, China</center>
+<center> <sup>2</sup> NLPR, Institute of Automation, Chinese Academy of Sciences, Beijing, China</center>
+<center> <sup>3</sup> Unisound AI Technology Co., Ltd, Beijing, China</center>
+
+
+
+<h2 id="abstract">Abstract</h2>
+<p>Conversational text-to-speech (TTS) aims to synthesize speech with proper prosody of reply based on the historical
+conversation. However, it is still a challenge to comprehensively model the conversation, and a majority of
+conversational TTS systems only focus on extracting global information and omit local prosody features, which contain
+important fine-grained information like keywords and emphasis. Moreover, it is insufficient to only consider the textual
+features, and acoustic features also contain various prosody information. Hence, we propose M<sup>2</sup>-CTTS, an end-to-end
+multi-scale multi-modal conversational text-to-speech system, aiming to comprehensively utilize historical conversation
+and enhance prosodic expression. More specifically, we design a textual context module and an acoustic context module
+with both coarse-grained and fine-grained modeling. Experimental results demonstrate that our model mixed with
+fine-grained context information and additionally considering acoustic features achieves better prosody performance and
+naturalness in CMOS tests.</p>
+
+<h2><p class="toc_title">Contents</p></h2>
+<div id="toc_container">
+<ul>
+  <li><a href="#1">Model Architecture</a></li>
+  <li><a href="#2">Evaluation on different models</a></li>
+</ul>
+</div>
+
+<a name="1"><h2>Model Architecture</h2></a>
+<div>
+  <br />
+  <p style="text-align: center">
+    <img src="./framework.png" width="1200" height="600"/>
+  </p>
+  <p>
+  <figcaption style="text-align:center;">
+    </font>
+    <font size=3>
+      Fig.1 Overview of our proposed M2-CTTS model. M<sup>2</sup>-CTTS is based on FastSpeech2 and HiFi-GAN. 
+      We design a Textual Context Module (TCM) and an Acoustic Context Module (ACM) for modeling. 
+      We develop a Text Utterance-Level Module (TUM) and a Text Phoneme-Level Module (TPM) in TCM and develop a Wave Utterance-Level Module (WUM) and a Wave Phoneme-Level Module (WPM) in ACM. 
+      Moreover, we use Conditional Decoder and Prosody Predictor Module (PPM) to enhance the expressiveness of the generated speech.
+    </font>
+  </figcaption><br><br>
+  </p>
+</div>
+
+
+
+<a name="2"><h2>Evaluation on different models</h2></a>
+<p>
+M0: reconstructed from mel spectrogram. <br>
+M1: baseline FastSpeech2 model. <br>
+M2: baseline model with Tu.  <br>
+M3: baseline model with Wu.  <br>
+M4: baseline model with Tu and Tp. <br>
+M5: baseline model with Wu and Wp. <br>
+M6: baseline model with Tu and Wu. <br>
+M7: baseline model with Tu, Tp, Wu and Wp. <br>
+</p>
+
+<h3>Sample 1</h3>
+<h4>history</h4>
+<p><audio src="samples/23/history/history.wav" controls="" preload=""></audio></p>
+<p>A: a big one would be nice.<br>B: how about this one? it's our biggest -- sixteen' in diameter.<br>A: oh, yes, i like that one, but it's too heavy.<br>B: ok, try this one. it's made of aluminum.<br><b>A: oh, yes! this is much better. but it has an aluminum handle.</b></p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>M0</strong></th>
+      <th style="text-align: center"><strong>M1</strong></th>
+      <th style="text-align: center"><strong>M2</strong></th>
+      <th style="text-align: center"><strong>M3</strong></th>
+      <th style="text-align: center"><strong>M4</strong></th>
+      <th style="text-align: center"><strong>M5</strong></th>
+      <th style="text-align: center"><strong>M6</strong></th>
+      <th style="text-align: center"><strong>M7</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><audio src="samples/23/current/6_1_d23.output-reconstruct.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/23/current/6_1_d23.output-v4-base.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/23/current/6_1_d23.output-v4-base-Tu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/23/current/6_1_d23.output-v4-base-Wu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/23/current/6_1_d23.output-v4-base-Tu-Tp.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/23/current/6_1_d23.output-v4-base-Wu-Wp.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/23/current/6_1_d23.output-v4-base-Tu-Wu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/23/current/6_1_d23.output-v5-all-predictor-saln.wav" controls="" preload=""></audio></td>
+  </tbody>
+</table>
+<br>
+<br>
+<h3>Sample 2</h3>
+<h4>history</h4>
+<p><audio src="samples/30/history/history.wav" controls="" preload=""></audio></p>
+<p>B: umm i think we should have a house cleaning today. what's your opinion?<br>A: oh, no. we just did it last week.<br>B: come on. what do you want to do? washing clothes or cleaning the house?<br>A: i'd rather wash the clothes.<br><b>B: ok. here is the laundry.</b></p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>M0</strong></th>
+      <th style="text-align: center"><strong>M1</strong></th>
+      <th style="text-align: center"><strong>M2</strong></th>
+      <th style="text-align: center"><strong>M3</strong></th>
+      <th style="text-align: center"><strong>M4</strong></th>
+      <th style="text-align: center"><strong>M5</strong></th>
+      <th style="text-align: center"><strong>M6</strong></th>
+      <th style="text-align: center"><strong>M7</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><audio src="samples/30/current/6_0_d30.output-reconstruct.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/6_0_d30.output-v4-base.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/6_0_d30.output-v4-base-Tu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/6_0_d30.output-v4-base-Wu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/6_0_d30.output-v4-base-Tu-Tp.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/6_0_d30.output-v4-base-Wu-Wp.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/6_0_d30.output-v4-base-Tu-Wu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/6_0_d30.output-v5-all-predictor-saln.wav" controls="" preload=""></audio></td>
+  </tbody>
+</table>
+<br>
+<br>
+<h3>Sample 3</h3>
+<h4>history</h4>
+<p><audio src="samples/30/history/history.wav" controls="" preload=""></audio></p>
+<p>B: come on. what do you want to do? washing clothes or cleaning the house?<br>A: i'd rather wash the clothes.<br>B: ok. here is the laundry.<br>A: oh, my god! so much!<br><b>B: don't worry. i'll help you with it later.</b></p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>M0</strong></th>
+      <th style="text-align: center"><strong>M1</strong></th>
+      <th style="text-align: center"><strong>M2</strong></th>
+      <th style="text-align: center"><strong>M3</strong></th>
+      <th style="text-align: center"><strong>M4</strong></th>
+      <th style="text-align: center"><strong>M5</strong></th>
+      <th style="text-align: center"><strong>M6</strong></th>
+      <th style="text-align: center"><strong>M7</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><audio src="samples/30/current/8_0_d30.output-reconstruct.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/8_0_d30.output-v4-base.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/8_0_d30.output-v4-base-Tu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/8_0_d30.output-v4-base-Wu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/8_0_d30.output-v4-base-Tu-Tp.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/8_0_d30.output-v4-base-Wu-Wp.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/8_0_d30.output-v4-base-Tu-Wu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/30/current/8_0_d30.output-v5-all-predictor-saln.wav" controls="" preload=""></audio></td>
+  </tbody>
+</table>
+<br>
+<br>
+<h3>Sample 4</h3>
+<h4>history</h4>
+<p><audio src="samples/111/history/history.wav" controls="" preload=""></audio></p>
+<p>A: hi, dear, i've got your voice at last.<br>B: hi, darling, i am thinking it is the time of your calling.<br>A: are you ok today?<br><b>B: quite good except thinking of you so much.</b></p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>M0</strong></th>
+      <th style="text-align: center"><strong>M1</strong></th>
+      <th style="text-align: center"><strong>M2</strong></th>
+      <th style="text-align: center"><strong>M3</strong></th>
+      <th style="text-align: center"><strong>M4</strong></th>
+      <th style="text-align: center"><strong>M5</strong></th>
+      <th style="text-align: center"><strong>M6</strong></th>
+      <th style="text-align: center"><strong>M7</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><audio src="samples/111/current/3_0_d111.output-reconstruct.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/111/current/3_0_d111.output-v4-base.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/111/current/3_0_d111.output-v4-base-Tu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/111/current/3_0_d111.output-v4-base-Wu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/111/current/3_0_d111.output-v4-base-Tu-Tp.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/111/current/3_0_d111.output-v4-base-Wu-Wp.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/111/current/3_0_d111.output-v4-base-Tu-Wu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/111/current/3_0_d111.output-v5-all-predictor-saln.wav" controls="" preload=""></audio></td>
+  </tbody>
+</table>
+<br>
+<br>
+<h3>Sample 5</h3>
+<h4>history</h4>
+<p><audio src="samples/164/history/history.wav" controls="" preload=""></audio></p>
+<p>B: what kind of drink do you want with those meals?<br>A: one coca cola and the other a sprite, please.<br>B: you can super-size your meals for only three dollars extra.<br>A: yes, i'd like that, then.<br><b>B: how about anything for dessert, like an apple pie or ice cream?</b></p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>M0</strong></th>
+      <th style="text-align: center"><strong>M1</strong></th>
+      <th style="text-align: center"><strong>M2</strong></th>
+      <th style="text-align: center"><strong>M3</strong></th>
+      <th style="text-align: center"><strong>M4</strong></th>
+      <th style="text-align: center"><strong>M5</strong></th>
+      <th style="text-align: center"><strong>M6</strong></th>
+      <th style="text-align: center"><strong>M7</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><audio src="samples/164/current/6_0_d164.output-reconstruct.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/164/current/6_0_d164.output-v4-base.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/164/current/6_0_d164.output-v4-base-Tu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/164/current/6_0_d164.output-v4-base-Wu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/164/current/6_0_d164.output-v4-base-Tu-Tp.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/164/current/6_0_d164.output-v4-base-Wu-Wp.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/164/current/6_0_d164.output-v4-base-Tu-Wu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/164/current/6_0_d164.output-v5-all-predictor-saln.wav" controls="" preload=""></audio></td>
+  </tbody>
+</table>
+<br>
+<br>
+<h3>Sample 6</h3>
+<h4>history</h4>
+<p><audio src="samples/188/history/history.wav" controls="" preload=""></audio></p>
+<p>B: may i help you?<br>A: this dress is beautiful. may i try it on?<br>B: i'm afraid you can't.<br>A: what is the material of this dress?<br><b>B: it's one hundred percent cotton.</b></p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>M0</strong></th>
+      <th style="text-align: center"><strong>M1</strong></th>
+      <th style="text-align: center"><strong>M2</strong></th>
+      <th style="text-align: center"><strong>M3</strong></th>
+      <th style="text-align: center"><strong>M4</strong></th>
+      <th style="text-align: center"><strong>M5</strong></th>
+      <th style="text-align: center"><strong>M6</strong></th>
+      <th style="text-align: center"><strong>M7</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><audio src="samples/188/current/4_0_d188.output-reconstruct.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/188/current/4_0_d188.output-v4-base.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/188/current/4_0_d188.output-v4-base-Tu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/188/current/4_0_d188.output-v4-base-Wu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/188/current/4_0_d188.output-v4-base-Tu-Tp.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/188/current/4_0_d188.output-v4-base-Wu-Wp.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/188/current/4_0_d188.output-v4-base-Tu-Wu.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="samples/188/current/4_0_d188.output-v5-all-predictor-saln.wav" controls="" preload=""></audio></td>
+  </tbody>
+</table>
+<br>
+
+
+      <footer class="site-footer">
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com/">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
